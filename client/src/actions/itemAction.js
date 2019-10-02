@@ -1,6 +1,7 @@
 import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING} from './types';
 import axios from 'axios';
-
+import {tokenConfig} from './authAction';
+import {returnErr} from './errorAction'
 export const getItems = () => dispatch => {
     dispatch(setItemsLoading());
     axios
@@ -13,15 +14,16 @@ export const getItems = () => dispatch => {
         )
 }
 
-export const deleteItem = id => dispatch => {
+export const deleteItem = id => (dispatch, getState)  => {
     axios
-        .delete(`/api/items/${id}`)
+        .delete(`/api/items/${id}`, tokenConfig(getState))
         .then(res => 
             dispatch({
                 type: DELETE_ITEM,
                 payload: id
             })
         )
+        .catch(err => dispatch(returnErr(err.response.data, err.response.status)))
 }
 /*export const deleteItem = id => (dispatch, getState) => {
     axios
@@ -36,13 +38,14 @@ export const deleteItem = id => dispatch => {
         dispatch(returnErrors(err.response.data, err.response.status))
       );
   };*/
-export const addItem = newItem  => dispatch => {
+export const addItem = newItem  => (dispatch, getState) => {
     axios
-        .post('/api/items', newItem)
+        .post('/api/items', newItem, tokenConfig(getState))
         .then(res => dispatch({
             type: ADD_ITEM,
             payload: res.data
         }))
+        .catch(err => dispatch(returnErr(err.response.data, err.response.status)))
 }
 
 export const setItemsLoading = () =>{
