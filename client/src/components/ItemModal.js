@@ -9,7 +9,6 @@ import {
     Label,
     Input
 } from 'reactstrap';
-import uuid from 'uuid';
 import {connect} from 'react-redux';
 import {addItem} from '../actions/itemAction';
 import PropTypes from 'prop-types';

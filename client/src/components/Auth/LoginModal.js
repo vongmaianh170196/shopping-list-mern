@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {login} from "../../actions/authAction"
 import {clearErr} from '../../actions/errorAction';
-import { timingSafeEqual } from 'crypto';
+
 class LoginModal extends Component{
     state ={
         modal: false,
@@ -33,7 +33,7 @@ class LoginModal extends Component{
     componentDidUpdate(prev) {
         const {error, isAuthenticated} = this.props;
         if(error !== prev.error){
-            if(error.id == "LOGIN_FAIL"){
+            if(error.id === "LOGIN_FAIL"){
                 this.setState({msg: error.msg.msg})
             }else{
                 this.setState({msg: null})
