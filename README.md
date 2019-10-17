@@ -1,2 +1,4 @@
-# shopping-list-mern
+# Shopping list using MERN stack 
+
+
  
